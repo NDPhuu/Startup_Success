@@ -1,6 +1,5 @@
 # Startup Success Prediction
 
->[!Caution]Notice
 > Vietnamese below
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
