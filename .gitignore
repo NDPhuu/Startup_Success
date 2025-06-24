@@ -1,0 +1,31 @@
+# Môi trường ảo
+env/
+venv/
+*.env
+.env
+
+# File cache của Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# File checkpoint của Jupyter Notebook
+.ipynb_checkpoints/
+
+# Dữ liệu
+# Bỏ comment dòng dưới nếu bạn không muốn đưa dữ liệu lên repo
+# data/*.csv
+
+# Thư mục của các IDE/Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# File hệ điều hành
+.DS_Store
+Thumbs.db
