@@ -1,31 +1,33 @@
 # Môi trường ảo
-env/
 venv/
-*.env
-.env
-
-# File cache của Python
+/venv/
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# File checkpoint của Jupyter Notebook
-.ipynb_checkpoints/
-
-# Dữ liệu
-# Bỏ comment dòng dưới nếu bạn không muốn đưa dữ liệu lên repo
-# data/*.csv
-
-# Thư mục của các IDE/Editor
-.vscode/
+# File cấu hình của IDE
 .idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+.vscode/
+*.swp
+*.swo
 
-# File hệ điều hành
+# File hệ thống
 .DS_Store
 Thumbs.db
+
+# File dữ liệu lớn (Nếu bạn không muốn đưa dữ liệu lên Git)
+# Bỏ comment dòng dưới nếu các file csv quá lớn
+# data/*.csv
+
+# File output hoặc file tạm
+/output/
+/logs/
+*.log
+*.tmp
+*.temp
+
+# File cấu hình Jupyter/IPython
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py

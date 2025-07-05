@@ -3,6 +3,5 @@ numpy
 seaborn
 matplotlib
 tensorflow
-xgboost
 scikit-learn
-jupyter
+xgboost

@@ -1,206 +1,177 @@
-# Startup Success Prediction
+# Startup Screening for Venture Capital
 
-> Vietnamese below
+This project applies Deep Learning and Machine Learning models to build a robust system for screening and predicting the success potential of startups. The solution is designed to tackle the challenge of massive deal flow faced by Venture Capital (VC) firms, using VinaCapital Ventures (VCV) as a case study.
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+## 1. The Problem & The Challenge
 
-## 1. Introduction
+In a thriving startup ecosystem, VC firms often face the "drinking from a firehose" problem—processing thousands of investment proposals annually. The traditional manual screening process is not only time-consuming and resource-intensive but also prone to risks like:
 
-This project develops and compares various Machine Learning and Deep Learning models to predict the success of a startup. In this context, "success" is defined as a company either undergoing an Initial Public Offering (IPO) or being acquired by another company.
+*   **Opportunity Cost:** Valuable analyst time is spent on eliminating low-potential companies instead of conducting deep due diligence on promising ones.
+*   **Cognitive Bias:** Subjective judgments can lead to overlooking unconventional but high-potential "hidden gems."
+*   **Scalability Issues:** Manual processes struggle to keep pace with an ever-increasing deal flow.
 
-The analysis is based on the publicly available **Crunchbase 2013 Snapshot** dataset, which contains comprehensive information about companies, their funding rounds, founding teams, and key milestones.
+This project was built to answer the strategic question: *"How can we empower the investment team to work more efficiently, make faster data-driven decisions, and minimize the risk of missing out on the next unicorn?"*
 
-## 2. Directory Structure
+## 2. Project Objectives
+
+*   **Develop & Evaluate:** Build and systematically compare the performance of a **Wide & Deep** model (integrating Entity Embeddings and Focal Loss) against a powerful **XGBoost** baseline.
+*   **Implement Practical Tools:** Deploy the optimal model to create decision-support tools, including:
+    1.  An **Intelligent Deal Funnel** to automatically classify and prioritize potential startups.
+    2.  An **Automated Investment Memo Generator** to produce preliminary analysis, highlight strengths and weaknesses, and suggest due diligence questions.
+    3.  A **Strategic Industry Analysis** tool using embeddings to visualize the startup landscape.
+
+## 3. Project Structure
 
 ```
-startup-prediction/
-├── .gitignore
-├── LICENSE
-├── README.md
-├── requirements.txt
+.
 ├── data/
-│   └── README.md  <-- (Explains how to obtain the data)
-└── notebooks/
-    └── Startup_prediction.ipynb
+│   ├── objects.csv
+│   ├── funding_rounds.csv
+│   ├── ipos.csv
+│   ├── acquisitions.csv
+│   ├── relationships.csv
+│   ├── milestones.csv
+│   ├── investments.csv
+│   ├── funds.csv
+│   └── degrees.csv
+├── notebooks/
+│   └── Startup_prediction.ipynb
+├── .gitignore
+├── README.md
+└── requirements.txt
 ```
 
-## 3. Data
+*   `data/`: Contains the raw Crunchbase dataset files.
+*   `notebooks/`: Contains the `Startup_prediction.ipynb` Jupyter Notebook with all analysis and modeling code.
+*   `.gitignore`: Specifies files and directories to be ignored by Git.
+*   `README.md`: This file.
+*   `requirements.txt`: A list of Python dependencies required to run the project.
 
-This project utilizes the **Crunchbase 2013 Snapshot** dataset. Due to its size, the data is not included directly in this repository.
+## 4. Methodology / Workflow
 
-You can download the dataset from [Kaggle: Crunchbase 2013](https://www.kaggle.com/datasets/arindam235/crunchbase-2013). Please place the `.csv` files into the `data/` directory.
+The `Startup_prediction.ipynb` notebook is organized into the following key sections:
 
-## 4. Installation
+*   **Part 0: Environment Setup:** Imports necessary libraries and sets up configurations.
+*   **Part 1: Data Loading & Feature Engineering:** Loads the dataset and creates meaningful features (e.g., company age, funding velocity, founder experience, investor quality).
+*   **Part 2: Exploratory Data Analysis (EDA):** Investigates data distributions and relationships to gain initial insights.
+*   **Part 3: Data Preparation for Modeling:** Splits and preprocesses the data for the Wide & Deep architecture.
+*   **Part 4: Wide & Deep Model Architecture:** Defines the model, using Entity Embeddings for categorical features and Focal Loss to handle severe class imbalance.
+*   **Part 5: Model Training & Evaluation:** Trains the model, evaluates its performance using metrics (Precision, Recall, F1-score, AUC), and compares it against the XGBoost baseline.
+*   **Part 6: Applications for VC:** Demonstrates the practical, value-added applications of the final model.
 
-To run the project notebook, you need to set up the environment and install the required libraries. Using a virtual environment is highly recommended.
+## 5. Installation and Usage
 
-**Prerequisites:**
-*   Python 3.8+
-*   pip
-
-**Setup Steps:**
-
-1.  **Clone this repository:**
+1.  **Clone the repository:**
     ```bash
-    git clone <YOUR_REPOSITORY_URL>
-    cd startup-prediction
+    git clone https://github.com/[YourUsername]/[YourRepositoryName].git
+    cd [YourRepositoryName]
     ```
 
-2.  **Create and activate a virtual environment:**
-    *   On macOS/Linux:
-        ```bash
-        python3 -m venv env
-        source env/bin/activate
-        ```
-    *   On Windows:
-        ```bash
-        python -m venv env
-        .\env\Scripts\activate
-        ```
+2.  **Create a virtual environment (recommended):**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    ```
 
-3.  **Install the required packages:**
+3.  **Install the required dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
 
-## 5. Usage
+4.  **Run the Notebook:**
+    Launch Jupyter Notebook or Jupyter Lab and open the `notebooks/Startup_prediction.ipynb` file.
+    ```bash
+    jupyter notebook
+    ```
+    *Note: Ensure the file paths to the `data/` directory are correctly specified within the notebook.*
 
-Once the installation is complete, you can launch Jupyter Notebook to view and run the analysis:
+## 6. Key Results
 
-```bash
-jupyter notebook notebooks/Startup_prediction.ipynb
-```
-
-## 6. Project Workflow
-
-The project follows a standard data science workflow:
-
-1.  **Data Collection & Preprocessing:** Data from multiple files was aggregated, cleaned, and the target variable (`is_successful`) was defined.
-2.  **Exploratory Data Analysis (EDA):** Visualizations were used to gain insights into data characteristics, class imbalance, and relationships between variables.
-3.  **Feature Engineering:** Meaningful new features (e.g., company age, funding velocity) were created to enhance model performance.
-4.  **Modeling:** Four different models were built and compared:
-    *   MLP (Multi-Layer Perceptron)
-    *   XGBoost
-    *   1D-CNN (Convolutional Neural Network)
-    *   LSTM (Long Short-Term Memory)
-5.  **Evaluation:** **Stratified K-Fold Cross-Validation** (K=5) was employed for robust and objective model evaluation. The primary metric used was **ROC AUC**.
-
-## 7. Results
-
-Based on the 5-fold cross-validation results, the **XGBoost** model demonstrated the best performance with a mean **ROC AUC score of 0.845**.
-
-| Model   | Mean AUC | Std Dev |
-|---------|----------|---------|
-| XGBoost | 0.8448   | 0.0034  |
-| MLP     | 0.8365   | 0.0044  |
-| CNN     | 0.8044   | 0.0050  |
-| LSTM    | 0.7809   | 0.0068  |
-
-Further analysis revealed that the model tends to favor high recall over precision for the "Success" class. **Decision threshold tuning** was performed to find a better balance for practical applications, addressing the "missed opportunities vs. false positives" trade-off.
-
-## 8. License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
+The final Wide & Deep model provides a significant efficiency gain. By focusing on the **top 20% of startups** as ranked by the model, an investment team can identify nearly **70% of all future successful companies**. This allows for a massive reduction in manual screening workload while maximizing the chances of discovering high-potential investment opportunities.
 ---
-# Dự đoán Khả năng Thành công của Startup
+# Sàng lọc Startup cho Quỹ Đầu tư Mạo hiểm
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+Dự án này ứng dụng các mô hình Học Sâu (Deep Learning) và Học Máy (Machine Learning) để xây dựng một hệ thống sàng lọc và đánh giá tiềm năng thành công của các công ty khởi nghiệp. Giải pháp được thiết kế để giải quyết bài toán xử lý dòng chảy thương vụ (deal flow) khổng lồ cho các quỹ đầu tư mạo hiểm như VinaCapital Ventures (VCV).
 
-## 1. Giới thiệu
+## 1. Bối cảnh & Thách thức
 
-Dự án này xây dựng và so sánh các mô hình học máy (Machine Learning) và học sâu (Deep Learning) nhằm dự báo khả năng thành công của một công ty khởi nghiệp. "Thành công" được định nghĩa là việc công ty thực hiện IPO hoặc được một công ty khác mua lại.
+Trong bối cảnh hệ sinh thái khởi nghiệp phát triển mạnh mẽ, các quỹ đầu tư mạo hiểm phải đối mặt với thách thức xử lý hàng ngàn hồ sơ đầu tư mỗi năm. Quy trình sàng lọc thủ công không chỉ tốn kém thời gian, nguồn lực mà còn tiềm ẩn rủi ro bỏ lỡ các cơ hội tiềm năng do thiên kiến chủ quan.
 
-Dữ liệu được sử dụng là bộ dữ liệu công khai **Crunchbase 2013 Snapshot**, chứa thông tin về các công ty, các vòng gọi vốn, đội ngũ sáng lập và các cột mốc quan trọng.
+Dự án này được xây dựng để trả lời câu hỏi: *"Làm thế nào chúng ta có thể giúp đội ngũ đầu tư làm việc hiệu quả hơn, ra quyết định dựa trên dữ liệu nhanh hơn và giảm thiểu rủi ro bỏ lọt các cơ hội đầu tư triển vọng?"*
 
-## 2. Cấu trúc Thư mục
+## 2. Mục tiêu
+
+*   **Xây dựng & Đánh giá:** Phát triển và so sánh hiệu năng giữa mô hình học sâu **Wide & Deep** (tích hợp Entity Embedding và Focal Loss) và mô hình nền tảng **XGBoost**.
+*   **Ứng dụng thực tiễn:** Triển khai mô hình tối ưu để xây dựng các công cụ hỗ trợ ra quyết định, bao gồm:
+    1.  **Phễu Sàng lọc Deal Thông minh:** Tự động phân loại và ưu tiên các startup tiềm năng.
+    2.  **Báo cáo Tóm tắt Đầu tư Tự động:** Tạo các bản ghi nhớ đầu tư sơ bộ, nêu bật điểm mạnh, rủi ro và gợi ý câu hỏi thẩm định.
+    3.  **Phân tích Chiến lược Ngành:** Trực quan hóa không gian các ngành để tìm ra các cụm và xu hướng đầu tư.
+
+## 3. Cấu trúc Dự án
 
 ```
-startup-prediction/
-├── .gitignore
-├── LICENSE
-├── README.md
-├── requirements.txt
+.
 ├── data/
-│   └── README.md  <-- (Giải thích cách tải dữ liệu)
-└── notebooks/
-    └── Startup_prediction.ipynb
+│   ├── objects.csv
+│   ├── funding_rounds.csv
+│   ├── ipos.csv
+│   ├── acquisitions.csv
+│   ├── relationships.csv
+│   ├── milestones.csv
+│   ├── investments.csv
+│   ├── funds.csv
+│   └── degrees.csv
+├── notebooks/
+│   └── Startup_prediction.ipynb
+├── .gitignore
+├── README.md
+└── requirements.txt
 ```
 
-## 3. Dữ liệu
+*   `data/`: Thư mục chứa các file dữ liệu thô từ Crunchbase.
+*   `notebooks/`: Chứa file Jupyter Notebook/Colab `Startup_prediction.ipynb` với toàn bộ mã nguồn phân tích và xây dựng mô hình.
+*   `.gitignore`: Chỉ định các file và thư mục cần bỏ qua khi đưa lên Git.
+*   `README.md`: File bạn đang đọc.
+*   `requirements.txt`: Danh sách các thư viện Python cần thiết để chạy dự án.
 
-Bộ dữ liệu **Crunchbase 2013 Snapshot** được sử dụng cho dự án này. Do kích thước lớn, dữ liệu không được đưa trực tiếp vào repository này.
+## 4. Quy trình thực hiện
 
-Bạn có thể tải bộ dữ liệu từ [Kaggle: Crunchbase 2013](https://www.kaggle.com/datasets/arindam235/crunchbase-2013) và đặt các file `.csv` vào thư mục `data/`.
+File `Startup_prediction.ipynb` bao gồm các phần chính sau:
 
-## 4. Cài đặt
+*   **Phần 0: Thiết lập Môi trường:** Import thư viện và cấu hình cần thiết.
+*   **Phần 1: Tải và Feature Engineering:** Tải dữ liệu và tạo ra các đặc trưng có ý nghĩa (ví dụ: tuổi công ty, tốc độ gọi vốn, kinh nghiệm nhà sáng lập).
+*   **Phần 2: Phân tích Khám phá Dữ liệu (EDA):** Khám phá các mối quan hệ trong dữ liệu để có những hiểu biết ban đầu.
+*   **Phần 3: Chuẩn bị Dữ liệu cho Mô hình:** Tách và chuẩn hóa dữ liệu cho các luồng Wide & Deep.
+*   **Phần 4: Xây dựng Mô hình Wide & Deep:** Định nghĩa kiến trúc mô hình, sử dụng Embedding cho biến phân loại và Focal Loss để xử lý mất cân bằng.
+*   **Phần 5: Huấn luyện và Đánh giá:** Huấn luyện mô hình, đánh giá hiệu năng qua các chỉ số (Precision, Recall, F1, AUC) và so sánh với mô hình XGBoost.
+*   **Phần 6: Ứng dụng cho VCV:** Trình bày các ứng dụng thực tiễn của mô hình đã xây dựng.
 
-Để chạy được notebook của dự án, bạn cần cài đặt các thư viện cần thiết. Khuyến khích sử dụng môi trường ảo (virtual environment).
+## 5. Hướng dẫn cài đặt và sử dụng
 
-**Yêu cầu:**
-*   Python 3.8+
-*   pip
-
-**Các bước cài đặt:**
-
-1.  **Clone repository này về máy:**
+1.  **Clone repository:**
     ```bash
-    git clone <URL_CUA_REPOSITORY>
-    cd startup-prediction
+    git clone https://github.com/[YourUsername]/[YourRepositoryName].git
+    cd [YourRepositoryName]
     ```
 
-2.  **Tạo và kích hoạt môi trường ảo:**
-    *   Trên macOS/Linux:
-        ```bash
-        python3 -m venv env
-        source env/bin/activate
-        ```
-    *   Trên Windows:
-        ```bash
-        python -m venv env
-        .\env\Scripts\activate
-        ```
+2.  **Tạo môi trường ảo (khuyến nghị):**
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # Trên Windows: venv\Scripts\activate
+    ```
 
-3.  **Cài đặt các thư viện:**
+3.  **Cài đặt các thư viện cần thiết:**
     ```bash
     pip install -r requirements.txt
     ```
 
-## 5. Sử dụng
+4.  **Chạy Notebook:**
+    Mở Jupyter Notebook hoặc Jupyter Lab và chạy file `notebooks/Startup_prediction.ipynb`.
+    ```bash
+    jupyter notebook
+    ```
+    *Lưu ý: Đảm bảo rằng đường dẫn đến thư mục `data/` trong notebook là chính xác.*
 
-Sau khi đã cài đặt xong, bạn có thể khởi chạy Jupyter Notebook để xem và chạy lại quy trình phân tích:
+## 6. Kết quả chính
 
-```bash
-jupyter notebook notebooks/Startup_prediction.ipynb
-```
-
-## 6. Quy trình Thực hiện
-
-Dự án được thực hiện theo các bước chuẩn của một quy trình khoa học dữ liệu:
-
-1.  **Thu thập & Tiền xử lý Dữ liệu:** Tổng hợp dữ liệu từ nhiều file, làm sạch và định nghĩa biến mục tiêu.
-2.  **Phân tích Khám phá Dữ liệu (EDA):** Sử dụng các biểu đồ trực quan để hiểu sâu về đặc điểm dữ liệu, sự mất cân bằng và mối quan hệ giữa các biến.
-3.  **Kiến tạo Đặc trưng (Feature Engineering):** Tạo ra các biến số mới có ý nghĩa (tuổi công ty, tốc độ gọi vốn, v.v.) để tăng hiệu quả cho mô hình.
-4.  **Mô hình hóa:** Xây dựng và so sánh hiệu năng của 4 mô hình khác nhau:
-    *   MLP (Multi-Layer Perceptron)
-    *   XGBoost
-    *   1D-CNN (Convolutional Neural Network)
-    *   LSTM (Long Short-Term Memory)
-5.  **Đánh giá:** Sử dụng phương pháp **Stratified K-Fold Cross-Validation** (K=5) để đánh giá một cách khách quan và đáng tin cậy. Độ đo chính là **ROC AUC**.
-
-## 7. Kết quả
-
-Dựa trên kết quả đánh giá chéo 5-fold, mô hình **XGBoost** cho hiệu năng tốt nhất với điểm **ROC AUC trung bình là 0.845**.
-
-| Mô hình | Mean AUC | Std Dev |
-|---------|----------|---------|
-| XGBoost | 0.8448   | 0.0034  |
-| MLP     | 0.8365   | 0.0044  |
-| CNN     | 0.8044   | 0.0050  |
-| LSTM    | 0.7809   | 0.0068  |
-
-Phân tích sâu hơn cho thấy mô hình có xu hướng "thà bắt nhầm còn hơn bỏ sót" (Recall cao, Precision thấp cho lớp "Thành công"). Việc **tinh chỉnh ngưỡng quyết định (threshold tuning)** đã được thực hiện để tìm ra điểm cân bằng tốt hơn cho bài toán thực tế.
-
-## 8. Giấy phép
-
-Dự án này được cấp phép theo Giấy phép MIT. Xem chi tiết tại file `LICENSE`.
+Mô hình Wide & Deep cho phép **tập trung vào 20% startup tiềm năng nhất** nhưng có thể **xác định được gần 70% tổng số các startup thành công**, giúp giảm đáng kể khối lượng công việc sàng lọc thủ công và tăng hiệu quả cho đội ngũ đầu tư.
